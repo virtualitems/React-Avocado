@@ -1,6 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router';
 
-import { AppLayout } from '@/layouts/app.layout';
+import { AppLayout } from '@/components/shared/app.layout';
 
 export function Router() {
   return (
