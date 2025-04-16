@@ -1,7 +1,7 @@
 import { type ReactElement } from 'react';
 import { Outlet } from 'react-router';
 
-export function AppLayout(): ReactElement {
+export default function AppLayout(): ReactElement {
   return (
     <div>
       <header>Header</header>
