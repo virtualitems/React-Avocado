@@ -1,23 +1,9 @@
-import { useEffect, useState } from 'react';
+import { usersContext } from '@/stores/users';
+import { useContext } from 'react';
 import { Link } from 'react-router';
 
 export default function UsersListPage(): React.ReactElement {
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    fetch('https://reqres.in/api/users')
-      .then((response) => {
-        if (response.ok === false)
-          throw new Error('Network response was not ok');
-        return response.json();
-      })
-      .then((json) => {
-        setUsers(json.data);
-      })
-      .catch((error) => {
-        console.warn(error);
-      });
-  }, []);
+  const { users } = useContext(usersContext);
 
   const onDelete = (_event: React.MouseEvent, index: number) => {
     const user = users[index];
