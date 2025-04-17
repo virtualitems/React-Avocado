@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
+import Loader from '../Loader';
 
 export default function UsersDetailPage(): React.ReactElement {
   const { id } = useParams<{ id: string }>();
@@ -28,7 +29,7 @@ export default function UsersDetailPage(): React.ReactElement {
   }, [id]);
 
   if (loading === true) {
-    return <div className="mx-auto p-4 container">Cargando...</div>;
+    return <Loader />;
   }
 
   if (error !== null) {
