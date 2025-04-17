@@ -1,14 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 
-type User = {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
-};
-
 export default function UsersDetailPage(): React.ReactElement {
   const { id } = useParams<{ id: string }>();
   const [user, setUser] = useState<User | null>(null);

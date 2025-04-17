@@ -1,14 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
-type User = {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
-};
-
 export default function UsersListPage(): React.ReactElement {
   const [users, setUsers] = useState<User[]>([]);
 
