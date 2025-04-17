@@ -15,6 +15,15 @@ export default function UsersListPage(): React.ReactElement {
 
   return (
     <div className="bg-white mx-auto mt-4 p-4 rounded container">
+      <div className="flex justify-end mb-4">
+        <Link
+          to="/users/create"
+          className="bg-green-500 hover:bg-green-700 px-4 py-2 rounded font-bold text-white"
+        >
+          Crear Usuario
+        </Link>
+      </div>
+
       <table className="w-full text-center">
         <thead>
           <tr className="bg-gray-200 pb-2">
