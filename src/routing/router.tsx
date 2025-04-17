@@ -1,6 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router';
 
-import AppLayout from '@/components/shared/AppLayout';
+import AppLayout from '@/components/AppLayout';
 import UsersCreatePage from '@/components/users/UsersCreatePage';
 import UsersDetailPage from '@/components/users/UsersDetailPage';
 import UsersEditPage from '@/components/users/UsersEditPage';
