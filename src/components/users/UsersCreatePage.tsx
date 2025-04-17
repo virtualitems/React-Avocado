@@ -88,7 +88,11 @@ export default function UsersCreatePage(): React.ReactElement {
 
         <div className="flex md:flex-row flex-col">
           <div className="md:w-full">
-            <form onSubmit={handleSubmit}>
+            <form
+              method="POST"
+              encType="multipart/form-data"
+              onSubmit={handleSubmit}
+            >
               <div className="mb-4">
                 <label htmlFor="email" className="block mb-1 text-gray-600">
                   Email:
