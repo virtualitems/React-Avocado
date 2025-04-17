@@ -3,11 +3,14 @@ import { useContext } from 'react';
 import { Link } from 'react-router';
 
 export default function UsersListPage(): React.ReactElement {
-  const { users } = useContext(usersContext);
+  const { users, setUsers } = useContext(usersContext);
 
   const onDelete = (_event: React.MouseEvent, index: number) => {
-    const user = users[index];
-    console.log('Delete user', user);
+    const usersList = users.slice();
+
+    usersList.splice(index, 1);
+
+    setUsers(usersList);
   };
 
   return (
