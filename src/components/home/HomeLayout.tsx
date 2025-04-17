@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 
-export default function AppLayout(): React.ReactElement {
+export default function HomeLayout(): React.ReactElement {
   return (
     <div className="relative min-h-screen">
       <header className="bg-gray-800 p-4 text-white">Header</header>

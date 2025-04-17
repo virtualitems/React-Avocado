@@ -1,6 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router';
 
-import AppLayout from '@/components/AppLayout';
+import HomeLayout from '@/components/home/HomeLayout';
 import UsersCreatePage from '@/components/users/UsersCreatePage';
 import UsersDetailPage from '@/components/users/UsersDetailPage';
 import UsersEditPage from '@/components/users/UsersEditPage';
@@ -11,7 +11,7 @@ export default function Router() {
   return (
     <HashRouter>
       <Routes>
-        <Route element={<AppLayout />}>
+        <Route element={<HomeLayout />}>
           <Route path="/" element={<div>Home</div>} />
         </Route>
         <Route element={<UsersLayout />}>
