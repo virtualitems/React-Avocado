@@ -1,34 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router';
 import Loader from '@/components/Loader';
+import { usersContext } from '@/stores/users';
 
 export default function UsersEditPage(): React.ReactElement {
   const { id } = useParams<{ id: string }>();
+  const { users, updateUser } = useContext(usersContext);
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+
   const [formError, setFormError] = useState<string | null>(null);
 
-  useEffect(() => {
-    setLoading(true);
-    fetch(`https://reqres.in/api/users/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('No se pudo obtener la información del usuario');
-        }
-        return response.json();
-      })
-      .then((json) => {
-        setUser(json.data);
-      })
-      .catch((err) => {
-        setError(err.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [id]);
+  const index = users.findIndex((user) => user.id === Number(id));
+
+  if (index === -1) {
+    return <Loader />;
+  }
+
+  const user = users[index];
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,44 +54,13 @@ export default function UsersEditPage(): React.ReactElement {
       setFormError('El apellido debe tener al menos 3 caracteres');
     }
 
-    const fetchTarget = `https://reqres.in/api/users/${id}`;
-    const fetchOptions: RequestInit = {
-      method: 'PATCH',
-      body: JSON.stringify({
-        email,
-        first_name: firstName,
-        last_name: lastName,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+    user.email = email;
+    user.first_name = firstName;
+    user.last_name = lastName;
 
-    setLoading(true);
-
-    const response = await fetch(fetchTarget, fetchOptions);
-
-    setLoading(false);
-
-    if (response.ok === false) {
-      setFormError(response.statusText);
-      return;
-    }
-
-    navigate(`/users/${id}`);
+    updateUser(index, user);
+    navigate(`/users/${user.id}`);
   };
-
-  if (loading === true) {
-    return <Loader />;
-  }
-
-  if (error !== null) {
-    return <div className="mx-auto p-4 text-red-500 container">{error}</div>;
-  }
-
-  if (user === null) {
-    return <div className="mx-auto p-4 container">Usuario no encontrado</div>;
-  }
 
   return (
     <div className="mx-auto p-4 container">

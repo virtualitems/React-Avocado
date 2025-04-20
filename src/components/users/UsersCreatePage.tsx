@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import Loader from '../Loader';
+import { usersContext } from '@/stores/users';
 
 export default function UsersCreatePage(): React.ReactElement {
   const [formError, setFormError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const { users, addUser } = useContext(usersContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -43,32 +45,17 @@ export default function UsersCreatePage(): React.ReactElement {
       setFormError('El apellido debe tener al menos 3 caracteres');
     }
 
-    const fetchTarget = 'https://reqres.in/api/users';
-
-    const fetchOptions: RequestInit = {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        first_name: firstName,
-        last_name: lastName,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
     setLoading(true);
 
-    const response = await fetch(fetchTarget, fetchOptions);
+    addUser({
+      id: users.length + 1,
+      email: email,
+      first_name: firstName,
+      last_name: lastName,
+      avatar: URL.createObjectURL(formData.get('avatar') as Blob),
+    });
 
-    setLoading(false);
-
-    if (response.ok === false) {
-      setFormError(response.statusText);
-      return;
-    }
-
-    navigate(`/users`);
+    navigate('/users');
   };
 
   if (loading === true) {

@@ -26,14 +26,14 @@ export default function UsersListPage(): React.ReactElement {
 
       <table className="w-full text-center">
         <thead>
-          <tr className="bg-gray-200 pb-2">
-            <th>ID</th>
-            <th>Email</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Show</th>
-            <th>Edit</th>
-            <th>Delete</th>
+          <tr className="bg-gray-200">
+            <th className="py-2 rounded-tl-md rounded-bl-md">ID</th>
+            <th className="py-2">Email</th>
+            <th className="py-2">First Name</th>
+            <th className="py-2">Last Name</th>
+            <th className="py-2">Show</th>
+            <th className="py-2">Edit</th>
+            <th className="py-2 rounded-tr-md rounded-br-md">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -53,7 +53,7 @@ export default function UsersListPage(): React.ReactElement {
 
 function ListUsersRow(props: {
   index: number;
-  user: { id: number; email: string; first_name: string; last_name: string };
+  user: User;
   onDelete?: (event: React.MouseEvent, index: number) => void;
 }) {
   const { user, index, onDelete } = props;

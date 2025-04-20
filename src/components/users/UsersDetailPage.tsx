@@ -1,43 +1,16 @@
-import { useEffect, useState } from 'react';
+import {  useContext } from 'react';
 import { Link, useParams } from 'react-router';
+import { usersContext } from '@/stores/users';
 import Loader from '../Loader';
 
 export default function UsersDetailPage(): React.ReactElement {
   const { id } = useParams<{ id: string }>();
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const { users } = useContext(usersContext);
 
-  useEffect(() => {
-    setLoading(true);
-    fetch(`https://reqres.in/api/users/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('No se pudo obtener la información del usuario');
-        }
-        return response.json();
-      })
-      .then((json) => {
-        setUser(json.data);
-      })
-      .catch((err) => {
-        setError(err.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [id]);
+  const user = users.find((user) => user.id === Number(id));
 
-  if (loading === true) {
+  if (user === undefined) {
     return <Loader />;
-  }
-
-  if (error !== null) {
-    return <div className="mx-auto p-4 text-red-500 container">{error}</div>;
-  }
-
-  if (user === null) {
-    return <div className="mx-auto p-4 container">Usuario no encontrado</div>;
   }
 
   return (
