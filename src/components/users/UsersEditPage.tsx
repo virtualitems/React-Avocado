@@ -34,6 +34,7 @@ export default function UsersEditPage(): React.ReactElement {
 
     if (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) === false) {
       setFormError('El email no es válido');
+      return;
     }
 
     if (firstName === null || firstName === '') {
@@ -43,6 +44,7 @@ export default function UsersEditPage(): React.ReactElement {
 
     if (firstName.length < 3) {
       setFormError('El nombre debe tener al menos 3 caracteres');
+      return;
     }
 
     if (lastName === null || lastName === '') {
@@ -52,6 +54,7 @@ export default function UsersEditPage(): React.ReactElement {
 
     if (lastName.length < 3) {
       setFormError('El apellido debe tener al menos 3 caracteres');
+      return;
     }
 
     user.email = email;
@@ -63,88 +66,102 @@ export default function UsersEditPage(): React.ReactElement {
   };
 
   return (
-    <div className="mx-auto p-4 container">
-      <div className="bg-white shadow-md p-6 rounded-lg">
-        <h1 className="mb-4 font-bold text-2xl">Editar Usuario</h1>
+    <div className="mx-auto mt-6">
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="p-6">
+          <h2 className="mb-6 font-extrabold text-gray-900 text-2xl sm:text-3xl">Editar Usuario</h2>
 
-        {formError !== null && (
-          <div className="bg-yellow-100 mb-4 p-4 border-yellow-500 border-l-4 rounded-tr-lg rounded-br-lg text-yellow-700">
-            <p>{formError}</p>
-          </div>
-        )}
+          {formError && (
+            <div className="bg-yellow-50 mb-6 p-4 border-yellow-400 border-l-4 rounded-md">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <svg className="w-5 h-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-yellow-700 text-sm">{formError}</p>
+                </div>
+              </div>
+            </div>
+          )}
 
-        <div className="flex md:flex-row flex-col">
-          <div className="mb-4 md:mb-0 md:w-1/3">
-            <img
-              src={user.avatar}
-              alt={`${user.first_name} ${user.last_name}`}
-              className="mx-auto rounded-full w-32 h-32"
-            />
-          </div>
-
-          <div className="md:w-2/3">
-            <form onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <label htmlFor="email" className="block mb-1 text-gray-600">
-                  Email:
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  defaultValue={user.email}
-                  className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-                  required
+          <div className="gap-6 grid grid-cols-1 md:grid-cols-3">
+            <div className="flex flex-col items-center">
+              <div className="bg-green-50 shadow-lg mb-4 border-4 border-green-100 rounded-full w-36 h-36 overflow-hidden">
+                <img
+                  src={user.avatar}
+                  alt={`${user.first_name} ${user.last_name}`}
+                  className="w-full h-full object-cover"
                 />
               </div>
+              <p className="text-gray-500 text-sm">ID de Usuario: {user.id}</p>
+            </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="first_name"
-                  className="block mb-1 text-gray-600"
-                >
-                  Nombre:
-                </label>
-                <input
-                  type="text"
-                  id="first_name"
-                  name="first_name"
-                  defaultValue={user.first_name}
-                  className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-                  required
-                />
-              </div>
+            <div className="md:col-span-2">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="email" className="block mb-1 font-medium text-gray-700 text-sm">
+                    Correo Electrónico
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    defaultValue={user.email}
+                    className="block bg-white shadow-sm px-3 py-2 border border-gray-300 focus:border-green-500 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 w-full"
+                    required
+                  />
+                </div>
 
-              <div className="mb-4">
-                <label htmlFor="last_name" className="block mb-1 text-gray-600">
-                  Apellido:
-                </label>
-                <input
-                  type="text"
-                  id="last_name"
-                  name="last_name"
-                  defaultValue={user.last_name}
-                  className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-                  required
-                />
-              </div>
+                <div>
+                  <label htmlFor="first_name" className="block mb-1 font-medium text-gray-700 text-sm">
+                    Nombre
+                  </label>
+                  <input
+                    type="text"
+                    id="first_name"
+                    name="first_name"
+                    defaultValue={user.first_name}
+                    className="block bg-white shadow-sm px-3 py-2 border border-gray-300 focus:border-green-500 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 w-full"
+                    required
+                  />
+                </div>
 
-              <div className="flex gap-2 mt-6">
-                <Link
-                  to="/users"
-                  className="bg-gray-500 hover:bg-gray-700 px-4 py-2 rounded font-bold text-white"
-                >
-                  Cancelar
-                </Link>
+                <div>
+                  <label htmlFor="last_name" className="block mb-1 font-medium text-gray-700 text-sm">
+                    Apellido
+                  </label>
+                  <input
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    defaultValue={user.last_name}
+                    className="block bg-white shadow-sm px-3 py-2 border border-gray-300 focus:border-green-500 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 w-full"
+                    required
+                  />
+                </div>
 
-                <button
-                  type="submit"
-                  className="bg-green-500 hover:bg-green-700 px-4 py-2 rounded font-bold text-white"
-                >
-                  Guardar Cambios
-                </button>
-              </div>
-            </form>
+                <div className="flex flex-wrap gap-3 pt-4">
+                  <Link
+                    to={`/users/${user.id}`}
+                    className="inline-flex justify-center items-center bg-gray-500 hover:bg-gray-600 shadow-sm px-4 py-2 border border-transparent rounded-md font-medium text-white transition-colors duration-200"
+                  >
+                    Cancelar
+                  </Link>
+
+                  <button
+                    type="submit"
+                    className="inline-flex justify-center items-center bg-green-600 hover:bg-green-700 shadow-sm px-4 py-2 border border-transparent rounded-md font-medium text-white transition-colors duration-200"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Guardar Cambios
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>

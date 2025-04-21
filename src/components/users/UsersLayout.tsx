@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
+import { Link } from 'react-router';
 
 import { usersContext } from '@/stores/users';
 import { listUsers } from '@/providers/users.service';
@@ -45,15 +46,32 @@ export default function UsersLayout(): React.ReactElement {
   }
 
   return (
-    <div className="relative min-h-screen">
-      <header className="bg-gray-800 p-4 text-white">Usuarios</header>
-      <main className="pb-16">
+    <div className="relative bg-gradient-to-br from-green-50 to-green-100 min-h-screen">
+      <header className="bg-green-700 shadow-md">
+        <div className="flex justify-between items-center mx-auto px-4 py-4 container">
+          <Link to="/" className="font-bold text-white text-2xl">Gestión de Usuarios</Link>
+          <nav>
+            <Link to="/" className="px-3 py-2 text-green-100 hover:text-white">Inicio</Link>
+            <Link to="/users" className="px-3 py-2 text-green-100 hover:text-white">Usuarios</Link>
+          </nav>
+        </div>
+      </header>
+      <main className="mx-auto px-4 py-8 pb-24 container">
         <usersContext.Provider value={value}>
           <Outlet />
         </usersContext.Provider>
       </main>
-      <footer className="bottom-0 left-0 absolute bg-gray-800 p-4 w-full text-white">
-        Footer
+      <footer className="bottom-0 absolute bg-green-700 w-full text-white">
+        <div className="flex sm:flex-row flex-col justify-between items-center mx-auto px-4 py-6 container">
+          <div className="mb-4 sm:mb-0">
+            <p>&copy; 2025 Gestión de Usuarios. Todos los derechos reservados.</p>
+          </div>
+          <div className="flex space-x-4">
+            <a href="#" className="text-green-100 hover:text-white">Términos</a>
+            <a href="#" className="text-green-100 hover:text-white">Privacidad</a>
+            <a href="#" className="text-green-100 hover:text-white">Contacto</a>
+          </div>
+        </div>
       </footer>
     </div>
   );
