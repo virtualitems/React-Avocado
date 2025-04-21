@@ -45,7 +45,7 @@ export async function createUser(formData: FormData) {
   const fetchOptions: RequestInit = {
     method: 'POST',
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/json',
     },
     body: formData,
   };
@@ -65,7 +65,7 @@ export async function updateUser(id: string, formData: FormData) {
   const fetchOptions: RequestInit = {
     method: 'PATCH',
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/json',
     },
     body: formData,
   };
