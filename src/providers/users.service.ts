@@ -39,7 +39,7 @@ export async function getUser(id: string) {
   return response;
 }
 
-export async function createUser(formData: FormData) {
+export async function createUser(user: User) {
   const fetchTarget = new URL('/api/users', API_URL);
 
   const fetchOptions: RequestInit = {
@@ -47,7 +47,7 @@ export async function createUser(formData: FormData) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: formData,
+    body: JSON.stringify(user),
   };
 
   const response = await fetch(fetchTarget, fetchOptions);
@@ -59,7 +59,7 @@ export async function createUser(formData: FormData) {
   return response;
 }
 
-export async function updateUser(id: string, formData: FormData) {
+export async function updateUser(id: string, user: User) {
   const fetchTarget = new URL(`/api/users/${id}`, API_URL);
 
   const fetchOptions: RequestInit = {
@@ -67,7 +67,7 @@ export async function updateUser(id: string, formData: FormData) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: formData,
+    body: JSON.stringify(user),
   };
 
   const response = await fetch(fetchTarget, fetchOptions);
